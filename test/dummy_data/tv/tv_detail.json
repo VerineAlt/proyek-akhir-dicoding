@@ -1,0 +1,68 @@
+{
+  "adult": false,
+  "backdrop_path": "/path.jpg",
+  "created_by": [],
+  "episode_run_time": [
+    60
+  ],
+  "first_air_date": "2020-05-05",
+  "genres": [
+    {
+      "id": 1,
+      "name": "Action"
+    }
+  ],
+  "homepage": "https://google.com",
+  "id": 1,
+  "in_production": false,
+  "languages": [
+    "en"
+  ],
+  "last_air_date": "2020-05-05",
+  "last_episode_to_air": {
+    "air_date": "2020-05-05",
+    "episode_number": 1,
+    "id": 1,
+    "name": "Episode 1",
+    "overview": "Overview",
+    "production_code": "",
+    "season_number": 1,
+    "still_path": "/path.jpg",
+    "vote_average": 1.0,
+    "vote_count": 1,
+    "runtime": 60,
+    "show_id": 1
+  },
+  "name": "Name",
+  "next_episode_to_air": null,
+  "networks": [],
+  "number_of_episodes": 1,
+  "number_of_seasons": 1,
+  "origin_country": [
+    "US"
+  ],
+  "original_language": "en",
+  "original_name": "Original Name",
+  "overview": "Overview",
+  "popularity": 1.0,
+  "poster_path": "/path.jpg",
+  "production_companies": [],
+  "production_countries": [],
+  "seasons": [
+    {
+      "air_date": "2020-05-05",
+      "episode_count": 1,
+      "id": 1,
+      "name": "Season 1",
+      "overview": "Overview",
+      "poster_path": "/path.jpg",
+      "season_number": 1
+    }
+  ],
+  "spoken_languages": [],
+  "status": "Status",
+  "tagline": "Tagline",
+  "type": "Type",
+  "vote_average": 1.0,
+  "vote_count": 1
+}

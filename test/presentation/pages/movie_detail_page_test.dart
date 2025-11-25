@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
@@ -14,6 +16,19 @@ import 'movie_detail_page_test.mocks.dart';
 @GenerateMocks([MovieDetailNotifier])
 void main() {
   late MockMovieDetailNotifier mockNotifier;
+
+  setUpAll(() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  const String emptyManifest = '{}';
+  final ByteData manifestBytes = ByteData.view(
+      Uint8List.fromList(emptyManifest.codeUnits).buffer);
+
+  TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+      .setMockMessageHandler('flutter/assets', (ByteData? message) async {
+    return manifestBytes; 
+  });
+});
 
   setUp(() {
     mockNotifier = MockMovieDetailNotifier();
@@ -70,7 +85,7 @@ void main() {
     when(mockNotifier.isAddedToWatchlist).thenReturn(false);
     when(mockNotifier.watchlistMessage).thenReturn('Added to Watchlist');
 
-    final watchlistButton = find.byType(ElevatedButton);
+    final watchlistButton = find.byType(FilledButton);
 
     await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
 
@@ -93,7 +108,7 @@ void main() {
     when(mockNotifier.isAddedToWatchlist).thenReturn(false);
     when(mockNotifier.watchlistMessage).thenReturn('Failed');
 
-    final watchlistButton = find.byType(ElevatedButton);
+    final watchlistButton = find.byType(FilledButton);
 
     await tester.pumpWidget(_makeTestableWidget(MovieDetailPage(id: 1)));
 
