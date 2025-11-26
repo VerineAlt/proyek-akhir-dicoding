@@ -1,0 +1,37 @@
+# codemagic.yaml
+
+workflows:
+  default-build:
+    name: Flutter Expert Test Runner
+    instance_type: mac_mini_m1
+    integrations:
+      # Optional: Add your custom environment variables if needed (e.g., API keys)
+      # environment:
+      #   groups:
+      #     - My_Secrets 
+
+    environment:
+      # Specify the version of Flutter you are using
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Flutter pub get
+        script: |
+          flutter pub get
+
+      - name: Run Unit and Widget Tests
+        # Crucial step: This runs your tests and generates coverage data
+        script: |
+          flutter test --coverage 
+
+    artifacts:
+      # Optional: Collect the lcov.info file as an artifact if you want to download the report
+      - $CM_EXPORT_DIR/coverage/lcov.info
+      
+    triggering:
+      # Automatically run this workflow when code is pushed to the main branch
+      branch: 
+        include:
+          - main
