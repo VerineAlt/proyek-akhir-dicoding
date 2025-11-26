@@ -1,13 +1,25 @@
-# ... (environment section)
+# In codemagic.yaml
+workflows:
+  default-build:
+    # ... (environment and integrations sections) ...
+    
+    scripts:
+      - name: Flutter pub get
+        script: |
+          flutter pub get
 
-scripts:
-  - name: Flutter pub get
-    script: |
-      flutter pub get
-
-  - name: Run Unit and Widget Tests  <-- THIS IS THE MISSING STEP
-    script: |
-      flutter test --coverage 
-
-  - name: Building Android # The next step in your current log
-    # ...
+      - name: Run Unit and Widget Tests 
+        script: |
+          # 1. Ensure the coverage file is created
+          flutter test --coverage 
+          
+      - name: Build Android App # Explicit build command to follow the tests
+        script: |
+          flutter build apk --debug --target-platform android-arm64
+          
+      # Add other build steps as needed
+      # - name: Building iOS App
+      #   script: |
+      #     flutter build ios --no-codesign
+          
+    # ... (artifacts and triggering sections) ...
