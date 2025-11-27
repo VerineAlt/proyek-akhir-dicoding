@@ -16,7 +16,7 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
 
   TvSeriesRepositoryImpl({
     required this.remoteDataSource,
-    required this.localDataSource, 
+    required this.localDataSource,
   });
 
   // --- 1. GET AIRING TODAY TV SERIES ---
@@ -58,7 +58,7 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
       return Left(ConnectionFailure('Failed to connect to the network.'));
     }
   }
-  
+
   // --- 4. GET TV SERIES DETAIL ---
   @override
   Future<Either<Failure, TvSeriesDetail>> getTvSeriesDetail(int id) async {
@@ -75,7 +75,8 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
 
   // --- 5. GET TV SERIES RECOMMENDATIONS ---
   @override
-  Future<Either<Failure, List<TvSeries>>> getTvSeriesRecommendations(int id) async {
+  Future<Either<Failure, List<TvSeries>>> getTvSeriesRecommendations(
+      int id) async {
     try {
       final result = await remoteDataSource.getTvSeriesRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
@@ -100,18 +101,19 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
   }
 
   // --- WATCHLIST IMPLEMENTATION (Criteria 4) ---
-  
 
   @override
-  Future<Either<Failure, String>> removeWatchlistTv(TvSeriesDetail tvSeries) async {
+  Future<Either<Failure, String>> removeWatchlistTv(
+      TvSeriesDetail tvSeries) async {
     try {
-      final result = await localDataSource.removeWatchlist(TvSeriesTable.fromEntity(tvSeries));
+      final result = await localDataSource
+          .removeWatchlist(TvSeriesTable.fromEntity(tvSeries));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
     }
   }
-  
+
   @override
   Future<Either<Failure, bool>> isAddedToWatchlistTv(int id) async {
     try {
@@ -123,19 +125,20 @@ class TvSeriesRepositoryImpl implements TvSeriesRepository {
       return Left(DatabaseFailure('Error checking watchlist status.'));
     }
   }
-  
+
   @override
   Future<Either<Failure, List<TvSeries>>> getWatchlistTv() async {
     final result = await localDataSource.getWatchlistTv();
     // Map the List of Watchlist Table Models back to Domain Entities
     return Right(result.map((model) => model.toEntity()).toList());
   }
-  
+
   @override
-  Future<Either<Failure, String>> saveWatchlistTv(TvSeriesDetail tvSeries) async {
+  Future<Either<Failure, String>> saveWatchlistTv(
+      TvSeriesDetail tvSeries) async {
     try {
-      final result =
-          await localDataSource.insertWatchlist(TvSeriesTable.fromEntity(tvSeries));
+      final result = await localDataSource
+          .insertWatchlist(TvSeriesTable.fromEntity(tvSeries));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));

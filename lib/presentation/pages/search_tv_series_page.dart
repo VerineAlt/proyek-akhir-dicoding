@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class SearchTvPage extends StatelessWidget {
   // This ROUTE_NAME must match what you defined in main.dart
-  static const ROUTE_NAME = '/search-tv'; 
+  static const ROUTE_NAME = '/search-tv';
 
   @override
   Widget build(BuildContext context) {

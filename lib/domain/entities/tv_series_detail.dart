@@ -1,4 +1,4 @@
-import 'package:ditonton/domain/entities/genre.dart'; 
+import 'package:ditonton/domain/entities/genre.dart';
 import 'package:equatable/equatable.dart';
 
 // FIX: Extend Equatable and define props
@@ -38,7 +38,8 @@ class EpisodeToAir extends Equatable {
 
 // FIX: Extend Equatable and define props
 class Season extends Equatable {
-  final String? airDate; // Changed to nullable based on typical API response/usage
+  final String?
+      airDate; // Changed to nullable based on typical API response/usage
   final int episodeCount;
   final int id;
   final String name;
@@ -55,7 +56,7 @@ class Season extends Equatable {
     required this.posterPath,
     required this.seasonNumber,
   });
-  
+
   @override
   List<Object?> get props => [
         airDate,
@@ -93,7 +94,7 @@ class TvSeriesDetail extends Equatable {
   final bool adult;
   final String? backdropPath;
   final String firstAirDate;
-  final List<Genre> genres; 
+  final List<Genre> genres;
   final int id;
   final String lastAirDate;
   final EpisodeToAir lastEpisodeToAir; // Now correctly compared

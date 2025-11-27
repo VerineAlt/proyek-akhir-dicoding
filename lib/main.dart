@@ -1,10 +1,11 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/main_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_series_page.dart';
@@ -26,6 +27,7 @@ import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
@@ -39,6 +41,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        BlocProvider(
+          create: (_) => di.locator<NowPlayingMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<PopularMoviesBloc>(),
+        ),
+        BlocProvider(create: (_) => di.locator<MovieDetailBloc>()),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedMoviesBloc>(),
+        ),
         ChangeNotifierProvider(
             create: (_) => di.locator<TvSeriesListNotifier>()),
         ChangeNotifierProvider(
@@ -48,12 +60,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => di.locator<WatchlistTvNotifier>()),
         ChangeNotifierProvider(create: (_) => di.locator<IndexNavNotifier>()),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
+        
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieSearchNotifier>(),
         ),

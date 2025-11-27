@@ -30,13 +30,12 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
-  // This method is called when the route above this one is popped 
+  // This method is called when the route above this one is popped
   // (e.g., when returning from the TvSeriesDetailPage after adding/removing a series)
   @override
   void didPopNext() {
     // Refresh the watchlist list to reflect the new status
-    Provider.of<WatchlistTvNotifier>(context, listen: false)
-        .fetchWatchlistTv();
+    Provider.of<WatchlistTvNotifier>(context, listen: false).fetchWatchlistTv();
   }
 
   @override
@@ -58,7 +57,8 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tvSeries = data.watchlistTv[index];
-                  return TvSeriesCard(tvSeries); // Use the correct TV Series Card widget
+                  return TvSeriesCard(
+                      tvSeries); // Use the correct TV Series Card widget
                 },
                 itemCount: data.watchlistTv.length,
               );

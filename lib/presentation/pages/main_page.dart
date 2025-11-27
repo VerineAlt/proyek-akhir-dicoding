@@ -13,7 +13,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context.watch<IndexNavNotifier>().indexBottomNavBar,
         onTap: (index) {

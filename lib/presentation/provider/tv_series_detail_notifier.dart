@@ -41,7 +41,7 @@ class TvSeriesDetailNotifier extends ChangeNotifier {
 
   String _message = '';
   String get message => _message;
-  
+
   String _watchlistMessage = '';
   String get watchlistMessage => _watchlistMessage;
 
@@ -52,7 +52,7 @@ class TvSeriesDetailNotifier extends ChangeNotifier {
 
     final detailResult = await getTvSeriesDetail.execute(id);
     final recommendationResult = await getTvSeriesRecommendations.execute(id);
-    
+
     detailResult.fold(
       (failure) {
         _tvSeriesState = RequestState.Error;
@@ -62,7 +62,7 @@ class TvSeriesDetailNotifier extends ChangeNotifier {
       (tvSeries) {
         _tvSeries = tvSeries;
         _tvSeriesState = RequestState.Loaded;
-        
+
         // Handle recommendations
         recommendationResult.fold(
           (failure) {

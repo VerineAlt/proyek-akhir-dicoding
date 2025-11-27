@@ -14,8 +14,6 @@ abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getTopRatedTvSeries();
   Future<List<TvSeriesModel>> searchTvSeries(String query);
   // ... and methods for detail/recommendations
-
-
 }
 // This abstract class should be defined in a separate file (e.g., tv_series_remote_data_source.dart)
 
@@ -72,8 +70,7 @@ class TvSeriesRemoteDataSourceImpl implements TvSeriesRemoteDataSource {
   // --- 4. GET TV SERIES DETAIL (Replaces Movie Detail) ---
   @override
   Future<TvSeriesDetailModel> getTvSeriesDetail(int id) async {
-    final response =
-        await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
+    final response = await client.get(Uri.parse('$BASE_URL/tv/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
       // Must use the new TvSeriesDetailModel

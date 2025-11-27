@@ -25,7 +25,8 @@ class LastEpisodeToAirModel extends Equatable {
     required this.runtime,
   });
 
-  factory LastEpisodeToAirModel.fromJson(Map<String, dynamic> json) => LastEpisodeToAirModel(
+  factory LastEpisodeToAirModel.fromJson(Map<String, dynamic> json) =>
+      LastEpisodeToAirModel(
         id: json['id'],
         name: json['name'],
         overview: json['overview'],
@@ -35,7 +36,7 @@ class LastEpisodeToAirModel extends Equatable {
         stillPath: json['still_path'],
         runtime: json['runtime'],
       );
-      
+
   // Conversion to Domain Entity
   EpisodeToAir toEntity() {
     return EpisodeToAir(
@@ -52,8 +53,15 @@ class LastEpisodeToAirModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, name, overview, airDate, episodeNumber, seasonNumber, stillPath, runtime
-  ];
+        id,
+        name,
+        overview,
+        airDate,
+        episodeNumber,
+        seasonNumber,
+        stillPath,
+        runtime
+      ];
 }
 
 // --- 2. Nested Model: SeasonModel ---
@@ -77,15 +85,15 @@ class SeasonModel extends Equatable {
   });
 
   factory SeasonModel.fromJson(Map<String, dynamic> json) => SeasonModel(
-    airDate: json['air_date'],
-    episodeCount: json['episode_count'],
-    id: json['id'],
-    name: json['name'],
-    overview: json['overview'],
-    posterPath: json['poster_path'],
-    seasonNumber: json['season_number'],
-  );
-  
+        airDate: json['air_date'],
+        episodeCount: json['episode_count'],
+        id: json['id'],
+        name: json['name'],
+        overview: json['overview'],
+        posterPath: json['poster_path'],
+        seasonNumber: json['season_number'],
+      );
+
   // Conversion to Domain Entity
   Season toEntity() {
     return Season(
@@ -100,9 +108,9 @@ class SeasonModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [airDate, episodeCount, id, name, overview, posterPath, seasonNumber];
+  List<Object?> get props =>
+      [airDate, episodeCount, id, name, overview, posterPath, seasonNumber];
 }
-
 
 // --- 3. Main Detail Model: TvSeriesDetailModel ---
 class TvSeriesDetailModel extends Equatable {
@@ -116,7 +124,7 @@ class TvSeriesDetailModel extends Equatable {
     required this.inProduction,
     required this.lastAirDate,
     required this.lastEpisodeToAir,
-    required this.name, 
+    required this.name,
     required this.nextEpisodeToAir,
     required this.numberOfEpisodes,
     required this.numberOfSeasons,
@@ -142,7 +150,7 @@ class TvSeriesDetailModel extends Equatable {
   final bool inProduction;
   final String? lastAirDate; // Made nullable to handle edge cases
   final LastEpisodeToAirModel lastEpisodeToAir;
-  final String name; 
+  final String name;
   final LastEpisodeToAirModel? nextEpisodeToAir; // Can be null
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -169,11 +177,12 @@ class TvSeriesDetailModel extends Equatable {
         id: json["id"],
         inProduction: json["in_production"],
         lastAirDate: json["last_air_date"],
-        lastEpisodeToAir: LastEpisodeToAirModel.fromJson(json["last_episode_to_air"]),
+        lastEpisodeToAir:
+            LastEpisodeToAirModel.fromJson(json["last_episode_to_air"]),
         name: json["name"],
-        nextEpisodeToAir: json["next_episode_to_air"] != null 
-            ? LastEpisodeToAirModel.fromJson(json["next_episode_to_air"]) 
-            : null, 
+        nextEpisodeToAir: json["next_episode_to_air"] != null
+            ? LastEpisodeToAirModel.fromJson(json["next_episode_to_air"])
+            : null,
         numberOfEpisodes: json["number_of_episodes"],
         numberOfSeasons: json["number_of_seasons"],
         originalLanguage: json["original_language"],
@@ -189,24 +198,24 @@ class TvSeriesDetailModel extends Equatable {
         voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
-      
+
   // --- Conversion to Domain Entity ---
   TvSeriesDetail toEntity() {
     return TvSeriesDetail(
       adult: this.adult,
       backdropPath: this.backdropPath,
       firstAirDate: this.firstAirDate ?? '',
-      genres: this.genres.map((genre) => genre.toEntity()).toList(), 
+      genres: this.genres.map((genre) => genre.toEntity()).toList(),
       id: this.id,
       lastAirDate: this.lastAirDate ?? '',
-      lastEpisodeToAir: this.lastEpisodeToAir.toEntity(), 
+      lastEpisodeToAir: this.lastEpisodeToAir.toEntity(),
       name: this.name,
-      nextEpisodeToAir: this.nextEpisodeToAir?.toEntity(), 
+      nextEpisodeToAir: this.nextEpisodeToAir?.toEntity(),
       numberOfEpisodes: this.numberOfEpisodes,
       numberOfSeasons: this.numberOfSeasons,
       overview: this.overview,
       posterPath: this.posterPath,
-      seasons: this.seasons.map((season) => season.toEntity()).toList(), 
+      seasons: this.seasons.map((season) => season.toEntity()).toList(),
       status: this.status,
       tagline: this.tagline,
       voteAverage: this.voteAverage,
@@ -216,15 +225,35 @@ class TvSeriesDetailModel extends Equatable {
 
   // --- toJson method (Useful for local storage/testing) ---
   Map<String, dynamic> toJson() => {
-    // Implement toJson fully if needed for local storage/watchlist detail
-    // For now, focusing on the toEntity path.
-  };
+        // Implement toJson fully if needed for local storage/watchlist detail
+        // For now, focusing on the toEntity path.
+      };
 
   @override
   List<Object?> get props => [
-    adult, backdropPath, firstAirDate, genres, homepage, id, inProduction, 
-    lastAirDate, lastEpisodeToAir, name, nextEpisodeToAir, numberOfEpisodes, 
-    numberOfSeasons, originalLanguage, originalName, overview, popularity, 
-    posterPath, seasons, status, tagline, type, voteAverage, voteCount
-  ];
+        adult,
+        backdropPath,
+        firstAirDate,
+        genres,
+        homepage,
+        id,
+        inProduction,
+        lastAirDate,
+        lastEpisodeToAir,
+        name,
+        nextEpisodeToAir,
+        numberOfEpisodes,
+        numberOfSeasons,
+        originalLanguage,
+        originalName,
+        overview,
+        popularity,
+        posterPath,
+        seasons,
+        status,
+        tagline,
+        type,
+        voteAverage,
+        voteCount
+      ];
 }

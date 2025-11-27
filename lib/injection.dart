@@ -30,6 +30,8 @@ import 'package:ditonton/domain/usecases/get_watchlist_tv.dart'; // NEW
 import 'package:ditonton/domain/usecases/remove_watchlist_tv.dart'; // NEW
 import 'package:ditonton/domain/usecases/save_watchlist_tv.dart'; // NEW
 import 'package:ditonton/domain/usecases/search_tv_series.dart'; // NEW
+import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
+import 'package:ditonton/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:ditonton/presentation/provider/index_nav_notifier.dart';
 
 import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
@@ -62,8 +64,17 @@ void init() {
       getTopRatedMovies: locator(),
     ),
   );
+  // locator.registerFactory(
+  //   () => MovieDetailNotifier(
+  //     getMovieDetail: locator(),
+  //     getMovieRecommendations: locator(),
+  //     getWatchListStatus: locator(),
+  //     saveWatchlist: locator(),
+  //     removeWatchlist: locator(),
+  //   ),
+  // );
   locator.registerFactory(
-    () => MovieDetailNotifier(
+    () => MovieDetailBloc(
       getMovieDetail: locator(),
       getMovieRecommendations: locator(),
       getWatchListStatus: locator(),
@@ -71,7 +82,7 @@ void init() {
       removeWatchlist: locator(),
     ),
   );
-  locator.registerFactory(()=> IndexNavNotifier());
+  locator.registerFactory(() => IndexNavNotifier());
   locator.registerFactory(() => MovieSearchNotifier(searchMovies: locator()));
   locator.registerFactory(() => PopularMoviesNotifier(locator()));
   locator.registerFactory(
@@ -127,6 +138,20 @@ void init() {
   locator.registerLazySingleton(() => SaveWatchlistTv(locator()));
   locator.registerLazySingleton(() => RemoveWatchlistTv(locator()));
   locator.registerLazySingleton(() => GetWatchlistTv(locator()));
+  // 1. Now Playing
+  locator.registerFactory(
+    () => NowPlayingMoviesBloc(locator()),
+  );
+
+  // 2. Popular
+  locator.registerFactory(
+    () => PopularMoviesBloc(locator()),
+  );
+
+  // 3. Top Rated
+  locator.registerFactory(
+    () => TopRatedMoviesBloc(locator()),
+  );
 
   // =========================================================================
   // DATA LAYER (REPOSITORIES)

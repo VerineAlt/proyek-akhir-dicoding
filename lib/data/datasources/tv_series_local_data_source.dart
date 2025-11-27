@@ -13,7 +13,7 @@ abstract class TvSeriesLocalDataSource {
 // Implement the contract
 class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   // Assume DatabaseHelper is generic enough to handle both Movie and TV Series tables
-  final DatabaseHelper databaseHelper; 
+  final DatabaseHelper databaseHelper;
 
   TvSeriesLocalDataSourceImpl({required this.databaseHelper});
 
@@ -22,7 +22,7 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   Future<String> insertWatchlist(TvSeriesTable tvSeries) async {
     try {
       // Assuming DatabaseHelper has a method to handle TV Series (or a generic insert)
-      await databaseHelper.insertWatchlistTv(tvSeries); 
+      await databaseHelper.insertWatchlistTv(tvSeries);
       return 'Added to Watchlist';
     } catch (e) {
       // Catches errors during database operation
@@ -35,7 +35,7 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   Future<String> removeWatchlist(TvSeriesTable tvSeries) async {
     try {
       // Assuming DatabaseHelper has a method to handle TV Series
-      await databaseHelper.removeWatchlistTv(tvSeries); 
+      await databaseHelper.removeWatchlistTv(tvSeries);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -46,11 +46,11 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   @override
   Future<TvSeriesTable?> getTvSeriesById(int id) async {
     // Assuming DatabaseHelper has a method specifically for TV Series
-    final result = await databaseHelper.getTvSeriesById(id); 
-    
+    final result = await databaseHelper.getTvSeriesById(id);
+
     if (result != null) {
       // Use the TvSeriesTable's fromMap factory
-      return TvSeriesTable.fromMap(result); 
+      return TvSeriesTable.fromMap(result);
     } else {
       return null;
     }
@@ -60,8 +60,8 @@ class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {
   @override
   Future<List<TvSeriesTable>> getWatchlistTv() async {
     // Assuming DatabaseHelper has a method for getting all TV Series
-    final result = await databaseHelper.getWatchlistTv(); 
-    
+    final result = await databaseHelper.getWatchlistTv();
+
     // Map the list of raw data back to TvSeriesTable objects
     return result.map((data) => TvSeriesTable.fromMap(data)).toList();
   }

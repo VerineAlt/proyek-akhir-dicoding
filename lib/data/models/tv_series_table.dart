@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 class TvSeriesTable extends Equatable {
   final int id;
-  final String? name;       // Use 'name' for TV Series title
+  final String? name; // Use 'name' for TV Series title
   final String? posterPath;
   final String? overview;
 
@@ -23,7 +23,7 @@ class TvSeriesTable extends Equatable {
         posterPath: tvSeries.posterPath,
         overview: tvSeries.overview,
       );
-      
+
   // Note: If you also want to save from the general TvSeries entity, you need another factory:
   /*
   factory TvSeriesTable.fromWatchlistEntity(TvSeries tvSeries) => TvSeriesTable(
@@ -33,7 +33,6 @@ class TvSeriesTable extends Equatable {
         overview: tvSeries.overview,
       );
   */
-
 
   // --- 2. From Database Map to Table ---
   // Used when retrieving data from the local database

@@ -5,7 +5,7 @@ import 'package:ditonton/domain/entities/tv_series_detail.dart';
 
 abstract class TvSeriesRepository {
   // --- Criteria 1: List TV Series ---
-  
+
   /// Fetches the list of TV series currently airing today.
   Future<Either<Failure, List<TvSeries>>> getAiringTodayTvSeries();
 
@@ -32,13 +32,13 @@ abstract class TvSeriesRepository {
 
   /// Saves a TV series entity to the local watchlist database.
   Future<Either<Failure, String>> saveWatchlistTv(TvSeriesDetail tvSeries);
-  
+
   /// Removes a TV series entity from the local watchlist database.
   Future<Either<Failure, String>> removeWatchlistTv(TvSeriesDetail tvSeries);
 
   /// Gets the status (is it on the watchlist?) for a specific TV series ID.
   Future<Either<Failure, bool>> isAddedToWatchlistTv(int id);
-  
+
   /// Retrieves the entire list of TV series entities from the watchlist.
   Future<Either<Failure, List<TvSeries>>> getWatchlistTv();
 }
