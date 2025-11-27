@@ -4,6 +4,8 @@ import 'package:ditonton/presentation/bloc/home_nav/home_nav_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_search/movie_search_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/main_page.dart';
@@ -16,7 +18,6 @@ import 'package:ditonton/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
-import 'package:ditonton/presentation/provider/index_nav_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series_search_notifier.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.locator<HomeNavCubit>(),
         ),
+        BlocProvider(create: (_) => di.locator<WatchlistMovieBloc>()),
+        BlocProvider(create: (_) => di.locator<WatchlistTvBloc>()),
         BlocProvider(
           create: (_) => di.locator<NowPlayingMoviesBloc>(),
         ),
@@ -59,7 +62,6 @@ class MyApp extends StatelessWidget {
             create: (_) => di.locator<TvSeriesSearchNotifier>()),
         ChangeNotifierProvider(
             create: (_) => di.locator<WatchlistTvNotifier>()),
-        ChangeNotifierProvider(create: (_) => di.locator<IndexNavNotifier>()),
         BlocProvider(create: (_) => di.locator<MovieSearchBloc>()),
         BlocProvider(create: (_) => di.locator<PopularMoviesBloc>()),
         BlocProvider(create: (_) => di.locator<TopRatedMoviesBloc>()),
@@ -82,10 +84,10 @@ class MyApp extends StatelessWidget {
           switch (settings.name) {
             case '/home':
               return MaterialPageRoute(builder: (_) => TvSeriesPage());
-            case WatchlistTvPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => WatchlistTvPage());
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
+            case WatchlistTvPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => WatchlistTvPage());
             case TopRatedMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
             case MovieDetailPage.ROUTE_NAME:

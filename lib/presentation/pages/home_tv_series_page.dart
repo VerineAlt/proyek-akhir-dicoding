@@ -49,13 +49,7 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
                 color: Colors.grey.shade900,
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.live_tv), // Changed icon for TV Series
-              title: Text('TV Series'),
-              onTap: () {
-                Navigator.pop(context); // Stays on the TV Series page
-              },
-            ),
+            
             ListTile(
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),

@@ -1,7 +1,7 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/pages/popular_tv_series_page.dart';
 import 'package:ditonton/presentation/provider/tv_series_search_notifier.dart'; // Use TV Notifier
+import 'package:ditonton/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/home_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
@@ -52,20 +51,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 color: Colors.grey.shade900,
               ),
             ),
-            ListTile(
-              leading: Icon(Icons.movie),
-              title: Text('Movies'),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.live_tv),
-              title: Text('TV Series'),
-              onTap: () {
-                Navigator.pushNamed(context, TvSeriesPage.ROUTE_NAME);
-              },
-            ),
+            
             ListTile(
               leading: Icon(Icons.save_alt),
               title: Text('Watchlist'),

@@ -1,71 +1,67 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/common/utils.dart'; // Contains routeObserver
-import 'package:ditonton/presentation/pages/popular_tv_series_page.dart';
-import 'package:ditonton/presentation/provider/watchlist_tv_notifier.dart'; // Use TV Watchlist Notifier
+import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_event.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_state.dart';
+import 'package:ditonton/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WatchlistTvPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist-tv'; // Define the TV Watchlist route
+  static const ROUTE_NAME = '/watchlist-tv';
 
   @override
   _WatchlistTvPageState createState() => _WatchlistTvPageState();
 }
 
-// Mixin RouteAware to listen for screen visibility changes
 class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
   @override
   void initState() {
     super.initState();
-    // Fetch data when the screen is first initialized
     Future.microtask(() =>
-        Provider.of<WatchlistTvNotifier>(context, listen: false)
-            .fetchWatchlistTv());
+        context.read<WatchlistTvBloc>().add(FetchWatchlistTv()));
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    // Subscribe to the route observer to listen for navigation events
     routeObserver.subscribe(this, ModalRoute.of(context)!);
   }
 
-  // This method is called when the route above this one is popped
-  // (e.g., when returning from the TvSeriesDetailPage after adding/removing a series)
   @override
   void didPopNext() {
-    // Refresh the watchlist list to reflect the new status
-    Provider.of<WatchlistTvNotifier>(context, listen: false).fetchWatchlistTv();
+    context.read<WatchlistTvBloc>().add(FetchWatchlistTv());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('TV Watchlist'),
+        title: Text('Watchlist TV Series'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        // Listen to the TV Watchlist Notifier
-        child: Consumer<WatchlistTvNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+        child: BlocBuilder<WatchlistTvBloc, WatchlistTvState>(
+          builder: (context, state) {
+            if (state is WatchlistTvLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.watchlistState == RequestState.Loaded) {
+            } else if (state is WatchlistTvHasData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvSeries = data.watchlistTv[index];
-                  return TvSeriesCard(
-                      tvSeries); // Use the correct TV Series Card widget
+                  final tvSeries = state.result[index];
+                  return TvSeriesCard(tvSeries);
                 },
-                itemCount: data.watchlistTv.length,
+                itemCount: state.result.length,
+              );
+            } else if (state is WatchlistTvError) {
+              return Center(
+                key: Key('error_message'),
+                child: Text(state.message),
               );
             } else {
               return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
+                child: Text('Watchlist is Empty'),
               );
             }
           },
@@ -76,7 +72,6 @@ class _WatchlistTvPageState extends State<WatchlistTvPage> with RouteAware {
 
   @override
   void dispose() {
-    // Crucial: Unsubscribe when the widget is destroyed
     routeObserver.unsubscribe(this);
     super.dispose();
   }

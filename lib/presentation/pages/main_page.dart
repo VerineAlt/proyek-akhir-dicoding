@@ -52,10 +52,6 @@ class MainPage extends StatelessWidget {
           ],
         ),
       ),
-      appBar: AppBar(
-        title: Text('Ditonton'),
-        // Optional: You can dynamic actions based on tab if needed
-      ),
       
       // MAIN BODY LOGIC
       body: BlocBuilder<HomeNavCubit, int>(

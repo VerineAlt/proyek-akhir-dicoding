@@ -34,7 +34,8 @@ import 'package:ditonton/presentation/bloc/home_nav/home_nav_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_search/movie_search_bloc.dart';
-import 'package:ditonton/presentation/provider/index_nav_notifier.dart';
+import 'package:ditonton/presentation/bloc/watchlist_movie/watchlist_movie_bloc.dart';
+import 'package:ditonton/presentation/bloc/watchlist_tv/watchlist_tv_bloc.dart';
 
 import 'package:ditonton/presentation/provider/watchlist_movie_notifier.dart';
 
@@ -74,12 +75,13 @@ void init() {
     ),
   );
 
-  locator.registerFactory(() => IndexNavNotifier());
   locator.registerFactory(() => MovieSearchBloc(searchMovies: locator()));
   locator.registerFactory(() => HomeNavCubit());
   locator.registerFactory(
       () => WatchlistMovieNotifier(getWatchlistMovies: locator()));
-
+  locator.registerFactory(() => WatchlistTvBloc(getWatchlistTv: locator()));
+  locator
+      .registerFactory(() => WatchlistMovieBloc(getWatchlistMovies: locator()));
   // --- TV Series Providers (NEW) ---
   locator.registerFactory(
     () => TvSeriesListNotifier(
