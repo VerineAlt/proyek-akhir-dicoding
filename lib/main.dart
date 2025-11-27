@@ -1,5 +1,6 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
+import 'package:ditonton/presentation/bloc/home_nav/home_nav_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_detail/movie_detail_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_list/movie_list_bloc.dart';
 import 'package:ditonton/presentation/bloc/movie_search/movie_search_bloc.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider(
+          create: (_) => di.locator<HomeNavCubit>(),
+        ),
+        BlocProvider(
           create: (_) => di.locator<NowPlayingMoviesBloc>(),
         ),
         BlocProvider(
@@ -56,9 +60,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => di.locator<WatchlistTvNotifier>()),
         ChangeNotifierProvider(create: (_) => di.locator<IndexNavNotifier>()),
-        
         BlocProvider(create: (_) => di.locator<MovieSearchBloc>()),
-       BlocProvider(create: (_) => di.locator<PopularMoviesBloc>()),
+        BlocProvider(create: (_) => di.locator<PopularMoviesBloc>()),
         BlocProvider(create: (_) => di.locator<TopRatedMoviesBloc>()),
         ChangeNotifierProvider(
           create: (_) => di.locator<WatchlistMovieNotifier>(),
