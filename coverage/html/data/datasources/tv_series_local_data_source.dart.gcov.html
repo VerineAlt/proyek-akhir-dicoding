@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Tue Nov 25 18:07:13 2025</td>
+            <td class="headerValue">Fri Nov 28 18:50:42 2025</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -75,7 +75,7 @@
 <a name="13"><span class="lineNum">      13 </span>            : // Implement the contract</a>
 <a name="14"><span class="lineNum">      14 </span>            : class TvSeriesLocalDataSourceImpl implements TvSeriesLocalDataSource {</a>
 <a name="15"><span class="lineNum">      15 </span>            :   // Assume DatabaseHelper is generic enough to handle both Movie and TV Series tables</a>
-<a name="16"><span class="lineNum">      16 </span>            :   final DatabaseHelper databaseHelper; </a>
+<a name="16"><span class="lineNum">      16 </span>            :   final DatabaseHelper databaseHelper;</a>
 <a name="17"><span class="lineNum">      17 </span>            : </a>
 <a name="18"><span class="lineNum">      18 </span><span class="lineCov">          1 :   TvSeriesLocalDataSourceImpl({required this.databaseHelper});</span></a>
 <a name="19"><span class="lineNum">      19 </span>            : </a>
@@ -84,7 +84,7 @@
 <a name="22"><span class="lineNum">      22 </span>            :   Future&lt;String&gt; insertWatchlist(TvSeriesTable tvSeries) async {</a>
 <a name="23"><span class="lineNum">      23 </span>            :     try {</a>
 <a name="24"><span class="lineNum">      24 </span>            :       // Assuming DatabaseHelper has a method to handle TV Series (or a generic insert)</a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :       await databaseHelper.insertWatchlistTv(tvSeries); </span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :       await databaseHelper.insertWatchlistTv(tvSeries);</span></a>
 <a name="26"><span class="lineNum">      26 </span>            :       return 'Added to Watchlist';</a>
 <a name="27"><span class="lineNum">      27 </span>            :     } catch (e) {</a>
 <a name="28"><span class="lineNum">      28 </span>            :       // Catches errors during database operation</a>
@@ -97,7 +97,7 @@
 <a name="35"><span class="lineNum">      35 </span>            :   Future&lt;String&gt; removeWatchlist(TvSeriesTable tvSeries) async {</a>
 <a name="36"><span class="lineNum">      36 </span>            :     try {</a>
 <a name="37"><span class="lineNum">      37 </span>            :       // Assuming DatabaseHelper has a method to handle TV Series</a>
-<a name="38"><span class="lineNum">      38 </span><span class="lineCov">          2 :       await databaseHelper.removeWatchlistTv(tvSeries); </span></a>
+<a name="38"><span class="lineNum">      38 </span><span class="lineCov">          2 :       await databaseHelper.removeWatchlistTv(tvSeries);</span></a>
 <a name="39"><span class="lineNum">      39 </span>            :       return 'Removed from Watchlist';</a>
 <a name="40"><span class="lineNum">      40 </span>            :     } catch (e) {</a>
 <a name="41"><span class="lineNum">      41 </span><span class="lineCov">          2 :       throw DatabaseException(e.toString());</span></a>
@@ -108,11 +108,11 @@
 <a name="46"><span class="lineNum">      46 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="47"><span class="lineNum">      47 </span>            :   Future&lt;TvSeriesTable?&gt; getTvSeriesById(int id) async {</a>
 <a name="48"><span class="lineNum">      48 </span>            :     // Assuming DatabaseHelper has a method specifically for TV Series</a>
-<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          2 :     final result = await databaseHelper.getTvSeriesById(id); </span></a>
-<a name="50"><span class="lineNum">      50 </span>            :     </a>
+<a name="49"><span class="lineNum">      49 </span><span class="lineCov">          2 :     final result = await databaseHelper.getTvSeriesById(id);</span></a>
+<a name="50"><span class="lineNum">      50 </span>            : </a>
 <a name="51"><span class="lineNum">      51 </span>            :     if (result != null) {</a>
 <a name="52"><span class="lineNum">      52 </span>            :       // Use the TvSeriesTable's fromMap factory</a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          1 :       return TvSeriesTable.fromMap(result); </span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">          1 :       return TvSeriesTable.fromMap(result);</span></a>
 <a name="54"><span class="lineNum">      54 </span>            :     } else {</a>
 <a name="55"><span class="lineNum">      55 </span>            :       return null;</a>
 <a name="56"><span class="lineNum">      56 </span>            :     }</a>
@@ -122,8 +122,8 @@
 <a name="60"><span class="lineNum">      60 </span><span class="lineCov">          1 :   @override</span></a>
 <a name="61"><span class="lineNum">      61 </span>            :   Future&lt;List&lt;TvSeriesTable&gt;&gt; getWatchlistTv() async {</a>
 <a name="62"><span class="lineNum">      62 </span>            :     // Assuming DatabaseHelper has a method for getting all TV Series</a>
-<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :     final result = await databaseHelper.getWatchlistTv(); </span></a>
-<a name="64"><span class="lineNum">      64 </span>            :     </a>
+<a name="63"><span class="lineNum">      63 </span><span class="lineCov">          2 :     final result = await databaseHelper.getWatchlistTv();</span></a>
+<a name="64"><span class="lineNum">      64 </span>            : </a>
 <a name="65"><span class="lineNum">      65 </span>            :     // Map the list of raw data back to TvSeriesTable objects</a>
 <a name="66"><span class="lineNum">      66 </span><span class="lineCov">          4 :     return result.map((data) =&gt; TvSeriesTable.fromMap(data)).toList();</span></a>
 <a name="67"><span class="lineNum">      67 </span>            :   }</a>

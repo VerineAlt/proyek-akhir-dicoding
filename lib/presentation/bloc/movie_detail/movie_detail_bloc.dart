@@ -58,7 +58,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       final result = await saveWatchlist.execute(event.movie);
       result.fold(
         (failure) => emit(WatchlistActionError(failure.message)),
-        (successMessage) => emit(WatchlistActionSuccess(successMessage)),
+        (successMessage) {
+          emit(WatchlistActionSuccess(successMessage));
+          add(LoadWatchlistStatus(event.movie.id));
+        },
       );
     });
 
@@ -66,7 +69,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       final result = await removeWatchlist.execute(event.movie);
       result.fold(
         (failure) => emit(WatchlistActionError(failure.message)),
-        (successMessage) => emit(WatchlistActionSuccess(successMessage)),
+        (successMessage) {
+          emit(WatchlistActionSuccess(successMessage));
+          add(LoadWatchlistStatus(event.movie.id));
+        },
       );
     });
 

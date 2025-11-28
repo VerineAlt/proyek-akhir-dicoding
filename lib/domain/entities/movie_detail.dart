@@ -14,7 +14,7 @@ class MovieDetail extends Equatable {
     required this.runtime,
     required this.title,
     required this.voteAverage,
-    required this.voteCount,
+    required this.voteCount, required int budget, required String homepage, required String imdbId, required String originalLanguage, required double popularity,
   });
 
   final bool adult;

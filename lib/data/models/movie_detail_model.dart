@@ -33,7 +33,7 @@ class MovieDetailResponse extends Equatable {
   final List<GenreModel> genres;
   final String homepage;
   final int id;
-  final String? imdbId;
+  final String imdbId;
   final String originalLanguage;
   final String originalTitle;
   final String overview;
@@ -112,7 +112,7 @@ class MovieDetailResponse extends Equatable {
       runtime: this.runtime,
       title: this.title,
       voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
+      voteCount: this.voteCount, budget: this.budget, homepage: this.homepage, imdbId: this.imdbId, originalLanguage: this.originalLanguage, popularity: this.popularity,
     );
   }
 
