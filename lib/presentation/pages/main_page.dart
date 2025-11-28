@@ -2,6 +2,7 @@ import 'package:ditonton/presentation/bloc/home_nav/home_nav_bloc.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_series_page.dart'; // Ensure correct import for TV Page
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,22 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              FirebaseCrashlytics.instance.crash();
+              throw Exception('This is a crash!');
+            },
+            child: Icon(Icons.close),
+          ),
+          Text(
+            'Trigger Crash',
+            style: Theme.of(context).textTheme.bodySmall,
+          )
+        ],
+      ),
       drawer: Drawer(
         child: Column(
           children: [
@@ -52,7 +69,7 @@ class MainPage extends StatelessWidget {
           ],
         ),
       ),
-      
+
       // MAIN BODY LOGIC
       body: BlocBuilder<HomeNavCubit, int>(
         builder: (context, currentIndex) {
@@ -63,7 +80,7 @@ class MainPage extends StatelessWidget {
           }
         },
       ),
-      
+
       // BOTTOM NAVIGATION BAR
       bottomNavigationBar: BlocBuilder<HomeNavCubit, int>(
         builder: (context, currentIndex) {
