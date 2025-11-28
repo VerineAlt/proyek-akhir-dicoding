@@ -38,7 +38,7 @@ class TvSeries extends Equatable {
   int? voteCount;
 
   @override
-  // TODO: implement props
+
   List<Object?> get props => [
         adult,
         backdropPath,
