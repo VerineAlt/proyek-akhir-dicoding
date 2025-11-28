@@ -1,8 +1,10 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/tv_series_list_notifier.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_list.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_state.dart';
+
 import 'package:ditonton/presentation/widgets/tv_series_card.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TopRatedTvPage extends StatefulWidget {
   static const ROUTE_NAME = '/top-rated-tv';
@@ -15,10 +17,9 @@ class _TopRatedTvPageState extends State<TopRatedTvPage> {
   @override
   void initState() {
     super.initState();
-    // Trigger the fetch for Top Rated TV series
+    // Trigger the fetch logic on init using the BlocTopRatedTvSeriesBloc
     Future.microtask(() =>
-        Provider.of<TvSeriesListNotifier>(context, listen: false)
-            .fetchTopRatedTvSeries());
+        context.read<TopRatedTvSeriesBloc>().add(FetchTopRatedTvSeries()));
   }
 
   @override
@@ -29,30 +30,29 @@ class _TopRatedTvPageState extends State<TopRatedTvPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvSeriesListNotifier>(
-          builder: (context, data, child) {
-            // 1. Check State: Loading
-            if (data.topRatedTvState == RequestState.Loading) {
+        // Listen to the specific BlocTopRatedTvSeriesBloc state
+        child: BlocBuilder<TopRatedTvSeriesBloc, TvSeriesState>(
+          builder: (context, state) {
+            if (state is TvSeriesLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            }
-            // 2. Check State: Loaded (Success)
-            else if (data.topRatedTvState == RequestState.Loaded) {
+            } else if (state is TvSeriesHasData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvSeries = data.topRatedTv[index];
-                  return TvSeriesCard(
-                      tvSeries); // Display using your card widget
+                  final tvSeries = state.result[index];
+                  return TvSeriesCard(tvSeries);
                 },
-                itemCount: data.topRatedTv.length,
+                itemCount: state.result.length,
               );
-            }
-            // 3. Check State: Error
-            else {
+            } else if (state is TvSeriesError) {
               return Center(
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
+              );
+            } else {
+              return Center(
+                child: Text('No Data'),
               );
             }
           },

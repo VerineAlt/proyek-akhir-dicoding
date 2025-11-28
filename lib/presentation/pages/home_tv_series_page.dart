@@ -1,19 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/tv_series.dart'; // Use TV Series Entity
+import 'package:ditonton/domain/entities/tv_series.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_bloc.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_list.dart';
+import 'package:ditonton/presentation/bloc/tv_list/tv_series_state.dart'; 
 import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/popular_movies_page.dart';
+
+import 'package:ditonton/presentation/pages/popular_tv_series_page.dart';
+
 import 'package:ditonton/presentation/pages/search_tv_series_page.dart';
+
 import 'package:ditonton/presentation/pages/top_rated_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/tv_series_detail_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_tv_page.dart';
-import 'package:ditonton/presentation/provider/tv_series_list_notifier.dart'; // Use TV Series Notifier
-import 'package:ditonton/common/state_enum.dart';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TvSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/tv'; // Define a route name
+  static const ROUTE_NAME = '/tv';
 
   @override
   _TvSeriesPageState createState() => _TvSeriesPageState();
@@ -23,18 +28,17 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
   @override
   void initState() {
     super.initState();
-    // CALL THE NEW TV SERIES FETCH METHODS
-    Future.microtask(
-        () => Provider.of<TvSeriesListNotifier>(context, listen: false)
-          ..fetchAiringTodayTvSeries()
-          ..fetchPopularTvSeries()
-          ..fetchTopRatedTvSeries());
+    // Fetch all 3 lists using their respective Blocs
+    Future.microtask(() {
+      context.read<AiringTodayTvSeriesBloc>().add(FetchAiringTodayTvSeries()); 
+      context.read<PopularTvSeriesBloc>().add(FetchPopularTvSeries());
+      context.read<TopRatedTvSeriesBloc>().add(FetchTopRatedTvSeries());
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // --- DRAWER (Navigation Menu) ---
       drawer: Drawer(
         child: Column(
           children: [
@@ -67,10 +71,8 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
           ],
         ),
       ),
-
-      // --- APP BAR ---
       appBar: AppBar(
-        title: Text('Ditonton TV Series'), // Updated Title
+        title: Text('Ditonton TV Series'),
         actions: [
           IconButton(
             onPressed: () {
@@ -80,72 +82,64 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
           )
         ],
       ),
-
-      // --- BODY (The Lists) ---
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. AIRING TODAY (Replaces Now Playing)
-              Text(
-                'Airing Today', // Updated Heading
-                style: kHeading6,
-              ),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state =
-                    data.airingTodayState; // Use the Airing Today state
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvSeriesList(
-                      data.airingTodayTv); // Use TvSeriesList widget
+              // 1. Airing Today
+              Text('Airing Today', style: kHeading6),
+              BlocBuilder<AiringTodayTvSeriesBloc, TvSeriesState>(
+                  builder: (context, state) {
+                if (state is TvSeriesLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is TvSeriesHasData) {
+                  return TvSeriesList(state.result);
+                } else if (state is TvSeriesError) {
+                  return Text(state.message);
                 } else {
-                  return Text('Failed to load Airing Today');
+                  return Container();
                 }
               }),
 
-              // 2. POPULAR TV SERIES
+              // 2. Popular
               _buildSubHeading(
-                  title: 'Popular',
-                  onTap: () {
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME);
-                  }),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvState; // Use Popular TV state
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvSeriesList(
-                      data.popularTv); // Use TvSeriesList widget
+                title: 'Popular',
+                onTap: () {
+                  Navigator.pushNamed(context, PopularTvPage.ROUTE_NAME);
+                },
+              ),
+              BlocBuilder<PopularTvSeriesBloc, TvSeriesState>(
+                  builder: (context, state) {
+                if (state is TvSeriesLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is TvSeriesHasData) {
+                  return TvSeriesList(state.result);
+                } else if (state is TvSeriesError) {
+                  return Text(state.message);
                 } else {
-                  return Text('Failed to load Popular TV');
+                  return Container();
                 }
               }),
 
-              // 3. TOP RATED TV SERIES
+              // 3. Top Rated
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () {
                   Navigator.pushNamed(context, TopRatedTvPage.ROUTE_NAME);
                 },
               ),
-              Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvState; // Use Top Rated TV state
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return TvSeriesList(
-                      data.topRatedTv); // Use TvSeriesList widget
+              BlocBuilder<TopRatedTvSeriesBloc, TvSeriesState>(
+                  builder: (context, state) {
+                if (state is TvSeriesLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is TvSeriesHasData) {
+                  return TvSeriesList(state.result);
+                } else if (state is TvSeriesError) {
+                  return Text(state.message);
                 } else {
-                  return Text('Failed to load Top Rated TV');
+                  return Container();
                 }
               }),
             ],
@@ -155,7 +149,6 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
     );
   }
 
-  // Reused widget for 'See More' functionality
   Row _buildSubHeading({required String title, required Function() onTap}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,9 +171,8 @@ class _TvSeriesPageState extends State<TvSeriesPage> {
   }
 }
 
-// --- List Widget: Adapted to use TvSeries Entity and Detail Page ---
 class TvSeriesList extends StatelessWidget {
-  final List<TvSeries> tvSeries; // Changed type from Movie to TvSeries
+  final List<TvSeries> tvSeries;
 
   TvSeriesList(this.tvSeries);
 
@@ -199,7 +191,7 @@ class TvSeriesList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   TvSeriesDetailPage.ROUTE_NAME,
-                  arguments: series.id, // Pass the TV Series ID as an argument
+                  arguments: series.id,
                 );
               },
               child: ClipRRect(
