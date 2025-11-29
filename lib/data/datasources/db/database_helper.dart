@@ -10,6 +10,10 @@ class DatabaseHelper {
     _databaseHelper = this;
   }
 
+  static void setDb(Database db) {
+    _database = db;
+  }
+
   factory DatabaseHelper() => _databaseHelper ?? DatabaseHelper._instance();
 
   static Database? _database;

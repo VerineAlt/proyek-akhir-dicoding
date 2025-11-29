@@ -1,4 +1,5 @@
 import 'package:ditonton/data/models/movie_table.dart';
+import 'package:ditonton/data/models/tv_series_table.dart';
 import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_detail.dart';
@@ -41,25 +42,35 @@ final testTvSeriesDetail = TvSeriesDetail(
       seasonNumber: 1,
     )
   ],
-  status: 'status',
-  tagline: 'tagline',
+  status: 'Status',
+  tagline: 'Tagline',
   voteAverage: 1,
   voteCount: 1,
 );
+
+final testTvSeriesMap = TvSeriesTable(
+    id: 1, name: 'name', posterPath: 'posterPath', overview: 'overview');
+
+final testWatchlistTvSeries = TvSeries.watchlist(
+  id: 1,
+  overview: 'overview',
+  posterPath: 'posterPath',
+  name: 'name',
+);
 final testTvSeries = TvSeries(
-    adult: false,
-    backdropPath: '/path.jpg',
-    genreIds: [1, 2, 3],
-    id: 1,
-    originalName: 'Original Name',
-    overview: 'Overview',
-    popularity: 1.0,
-    posterPath: '/path.jpg',
-    firstAirDate: '2020-05-05',
-    name: 'TV Name',
-    voteAverage: 1.0,
-    voteCount: 1,
-  );
+  adult: false,
+  backdropPath: '/path.jpg',
+  genreIds: [1, 2, 3],
+  id: 1,
+  originalName: 'Original Name',
+  overview: 'Overview',
+  popularity: 1.0,
+  posterPath: '/path.jpg',
+  firstAirDate: '2020-05-05',
+  name: 'TV Name',
+  voteAverage: 1.0,
+  voteCount: 1,
+);
 
 final testMovie = Movie(
   adult: false,
@@ -80,7 +91,6 @@ final testMovie = Movie(
 
 final testMovieList = [testMovie];
 
-
 final testWatchlistMovie = Movie.watchlist(
   id: 1,
   title: 'title',
@@ -95,12 +105,8 @@ final testMovieTable = MovieTable(
   overview: 'overview',
 );
 
-final testMovieMap = {
-  'id': 1,
-  'overview': 'overview',
-  'posterPath': 'posterPath',
-  'title': 'title',
-};
+final testMovieMap = MovieTable(
+    id: 1, title: 'title', posterPath: 'posterPath', overview: 'overview');
 
 final testMovieDetail = MovieDetail(
   adult: false,
@@ -110,17 +116,16 @@ final testMovieDetail = MovieDetail(
   originalTitle: 'originalTitle',
   overview: 'overview',
   posterPath: 'posterPath',
-  releaseDate: '2023-01-01', 
+  releaseDate: '2023-01-01',
   runtime: 120,
   title: 'title',
   voteAverage: 1.0,
   voteCount: 1,
-  budget: 100000000, 
-  homepage: 'https://www.example.com', 
-  imdbId: 'tt1234567', 
-  originalLanguage: 'en', 
-  popularity: 90.5, 
-  
+  budget: 100000000,
+  homepage: 'https://www.example.com',
+  imdbId: 'tt1234567',
+  originalLanguage: 'en',
+  popularity: 90.5,
 );
 
 final testMovieDetailResponse = MovieDetailResponse(

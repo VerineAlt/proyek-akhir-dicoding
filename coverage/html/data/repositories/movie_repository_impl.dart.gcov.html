@@ -31,13 +31,13 @@
             <td class="headerValue">lcov.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">58</td>
-            <td class="headerCovTableEntry">58</td>
+            <td class="headerCovTableEntry">60</td>
+            <td class="headerCovTableEntry">60</td>
             <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Tue Nov 25 18:07:13 2025</td>
+            <td class="headerValue">Sat Nov 29 08:26:24 2025</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -178,17 +178,22 @@
 <a name="116"><span class="lineNum">     116 </span>            :   }</a>
 <a name="117"><span class="lineNum">     117 </span>            : </a>
 <a name="118"><span class="lineNum">     118 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="119"><span class="lineNum">     119 </span>            :   Future&lt;bool&gt; isAddedToWatchlist(int id) async {</a>
-<a name="120"><span class="lineNum">     120 </span><span class="lineCov">          2 :     final result = await localDataSource.getMovieById(id);</span></a>
-<a name="121"><span class="lineNum">     121 </span>            :     return result != null;</a>
-<a name="122"><span class="lineNum">     122 </span>            :   }</a>
-<a name="123"><span class="lineNum">     123 </span>            : </a>
-<a name="124"><span class="lineNum">     124 </span><span class="lineCov">          1 :   @override</span></a>
-<a name="125"><span class="lineNum">     125 </span>            :   Future&lt;Either&lt;Failure, List&lt;Movie&gt;&gt;&gt; getWatchlistMovies() async {</a>
-<a name="126"><span class="lineNum">     126 </span><span class="lineCov">          2 :     final result = await localDataSource.getWatchlistMovies();</span></a>
-<a name="127"><span class="lineNum">     127 </span><span class="lineCov">          5 :     return Right(result.map((data) =&gt; data.toEntity()).toList());</span></a>
-<a name="128"><span class="lineNum">     128 </span>            :   }</a>
-<a name="129"><span class="lineNum">     129 </span>            : }</a>
+<a name="119"><span class="lineNum">     119 </span>            : Future&lt;Either&lt;Failure, bool&gt;&gt; isAddedToWatchlist(int id) async {</a>
+<a name="120"><span class="lineNum">     120 </span>            :   try {</a>
+<a name="121"><span class="lineNum">     121 </span><span class="lineCov">          2 :     final result = await localDataSource.getMovieById(id);</span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">          1 :     return Right(result != null);   // &lt;-- wrap bool in Right()</span></a>
+<a name="123"><span class="lineNum">     123 </span>            :   } catch (e) {</a>
+<a name="124"><span class="lineNum">     124 </span><span class="lineCov">          3 :     return Left(DatabaseFailure(e.toString())); </span></a>
+<a name="125"><span class="lineNum">     125 </span>            :   }</a>
+<a name="126"><span class="lineNum">     126 </span>            : }</a>
+<a name="127"><span class="lineNum">     127 </span>            : </a>
+<a name="128"><span class="lineNum">     128 </span>            : </a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">          1 :   @override</span></a>
+<a name="130"><span class="lineNum">     130 </span>            :   Future&lt;Either&lt;Failure, List&lt;Movie&gt;&gt;&gt; getWatchlistMovies() async {</a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineCov">          2 :     final result = await localDataSource.getWatchlistMovies();</span></a>
+<a name="132"><span class="lineNum">     132 </span><span class="lineCov">          5 :     return Right(result.map((data) =&gt; data.toEntity()).toList());</span></a>
+<a name="133"><span class="lineNum">     133 </span>            :   }</a>
+<a name="134"><span class="lineNum">     134 </span>            : }</a>
 </pre>
       </td>
     </tr>

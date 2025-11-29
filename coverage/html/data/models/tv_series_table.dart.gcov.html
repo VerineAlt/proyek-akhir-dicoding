@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">Fri Nov 28 18:50:42 2025</td>
+            <td class="headerValue">Sat Nov 29 08:26:24 2025</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
@@ -70,7 +70,7 @@
 <a name="8"><span class="lineNum">       8 </span>            :   final String? posterPath;</a>
 <a name="9"><span class="lineNum">       9 </span>            :   final String? overview;</a>
 <a name="10"><span class="lineNum">      10 </span>            : </a>
-<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          2 :   TvSeriesTable({</span></a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineCov">          3 :   TvSeriesTable({</span></a>
 <a name="12"><span class="lineNum">      12 </span>            :     required this.id,</a>
 <a name="13"><span class="lineNum">      13 </span>            :     required this.name,</a>
 <a name="14"><span class="lineNum">      14 </span>            :     required this.posterPath,</a>
@@ -79,11 +79,11 @@
 <a name="17"><span class="lineNum">      17 </span>            : </a>
 <a name="18"><span class="lineNum">      18 </span>            :   // --- 1. From Domain Entity (Detail) to Table ---</a>
 <a name="19"><span class="lineNum">      19 </span>            :   // Used when adding a TV Series to the Watchlist (from the Detail Page)</a>
-<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          2 :   factory TvSeriesTable.fromEntity(TvSeriesDetail tvSeries) =&gt; TvSeriesTable(</span></a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          1 :         id: tvSeries.id,</span></a>
-<a name="22"><span class="lineNum">      22 </span><span class="lineCov">          1 :         name: tvSeries.name,</span></a>
-<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          1 :         posterPath: tvSeries.posterPath,</span></a>
-<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          1 :         overview: tvSeries.overview,</span></a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineCov">          4 :   factory TvSeriesTable.fromEntity(TvSeriesDetail tvSeries) =&gt; TvSeriesTable(</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          2 :         id: tvSeries.id,</span></a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineCov">          2 :         name: tvSeries.name,</span></a>
+<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          2 :         posterPath: tvSeries.posterPath,</span></a>
+<a name="24"><span class="lineNum">      24 </span><span class="lineCov">          2 :         overview: tvSeries.overview,</span></a>
 <a name="25"><span class="lineNum">      25 </span>            :       );</a>
 <a name="26"><span class="lineNum">      26 </span>            : </a>
 <a name="27"><span class="lineNum">      27 </span>            :   // Note: If you also want to save from the general TvSeries entity, you need another factory:</a>
@@ -116,15 +116,15 @@
 <a name="54"><span class="lineNum">      54 </span>            : </a>
 <a name="55"><span class="lineNum">      55 </span>            :   // --- 4. To Domain Entity ---</a>
 <a name="56"><span class="lineNum">      56 </span>            :   // Used when the Repository returns Watchlist items to the Use Cases</a>
-<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          2 :   TvSeries toEntity() =&gt; TvSeries.watchlist(</span></a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          1 :         id: id,</span></a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          1 :         overview: overview,</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          1 :         posterPath: posterPath,</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          1 :         name: name, // Use 'name' in the watchlist entity constructor</span></a>
+<a name="57"><span class="lineNum">      57 </span><span class="lineCov">          4 :   TvSeries toEntity() =&gt; TvSeries.watchlist(</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">          2 :         id: id,</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">          2 :         overview: overview,</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          2 :         posterPath: posterPath,</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          2 :         name: name, // Use 'name' in the watchlist entity constructor</span></a>
 <a name="62"><span class="lineNum">      62 </span>            :       );</a>
 <a name="63"><span class="lineNum">      63 </span>            : </a>
-<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          2 :   @override</span></a>
-<a name="65"><span class="lineNum">      65 </span><span class="lineCov">         10 :   List&lt;Object?&gt; get props =&gt; [id, name, posterPath, overview];</span></a>
+<a name="64"><span class="lineNum">      64 </span><span class="lineCov">          3 :   @override</span></a>
+<a name="65"><span class="lineNum">      65 </span><span class="lineCov">         15 :   List&lt;Object?&gt; get props =&gt; [id, name, posterPath, overview];</span></a>
 <a name="66"><span class="lineNum">      66 </span>            : }</a>
 </pre>
       </td>
